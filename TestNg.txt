@@ -1,0 +1,70 @@
+package Global;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class TestngEx2 {
+	private WebDriver driver;
+	@BeforeClass
+	public void startup()
+	{
+		System.setProperty("webdriver.chrome.driver","D:\\chromedriver_win32\\Chromedriver.exe");
+		driver=new ChromeDriver();
+		
+	}
+	@Test(priority=1) /*(description="Amazon Login")*/
+	public void login() throws Exception{
+		Reporter.log("test case steps");
+		driver.get("https://www.amazon.in/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.in%2F%3Fref%3Dnav_signin&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=inflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&");
+		Reporter.log("1.Application opened");
+		 driver.findElement(By.name("email")).sendKeys("7036376491");
+		 Reporter.log("2.Typing Username"); 
+		 driver.findElement(By.id("continue")).click();
+		driver.findElement(By.name("password")).sendKeys("ravi@123");
+		Reporter.log("3.Tying password" );
+		driver.findElement(By.id("signInSubmit")).click();
+		Thread.sleep(3000);
+		Reporter.log("4.Login Completed");
+		
+	}
+	
+	@Test(priority=2)
+	public void dropdown() throws Exception
+	{
+		Select st=new Select(driver.findElement(By.name("url")));
+	    st.selectByVisibleText("Amazon Devices");
+	    Thread.sleep(3000);
+	    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("alexa");
+	    driver.findElement(By.id("nav-search-submit-button")).click();
+	}
+	
+	@Test(priority=3)
+	public void checkbox() throws Exception
+	{
+		 //checkBox
+	    driver.findElement(By.xpath("//*[@id=\"p_n_specials_match/21618256031\"]/span/a/div/label/i")).click();
+	    Thread.sleep(3000);
+	}
+	@AfterClass
+	public void teardown() throws Exception
+	{
+		 WebElement element=driver.findElement(By.id("nav-link-accountList-nav-line-1"));
+		    Actions action=new Actions(driver);
+		    action.moveToElement(element).build().perform();
+		    Thread.sleep(3000);
+		driver.findElement(By.linkText("Sign Out")).click();
+		Thread.sleep(3000);
+		driver.quit();
+	}
+
+
+
+}
