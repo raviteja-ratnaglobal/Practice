@@ -1,0 +1,44 @@
+package Global;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+
+public class Dropdown {
+	public static void main(String args[]) throws Exception
+	{
+		System.setProperty("webdriver.chrome.driver", "D:\\chromedriver_win32\\Chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		driver.navigate().to("https://www.amazon.com/ap/signin?_encoding=UTF8&openid.assoc_handle=usflex&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2Fgp%2Fyourstore%2Fhome%3Fie%3DUTF8%26action%3Dsign-out%26path%3D%252Fgp%252Fyourstore%252Fhome%26ref_%3Dnav_AccountFlyout_signout%26signIn%3D1%26useRedirectOnSuccess%3D1");
+	    Thread.sleep(3000);
+	    
+	    //Login
+	    driver.findElement(By.name("email")).sendKeys("7036376491");
+	    driver.findElement(By.id("continue")).click();
+	    driver.findElement(By.name("password")).sendKeys("ravi@123");
+	    driver.findElement(By.id("signInSubmit")).click();
+	    Thread.sleep(3000);
+	    
+	    //Dropdown
+	    Select st=new Select(driver.findElement(By.name("url")));
+	    st.selectByVisibleText("Amazon Devices");
+	    Thread.sleep(3000);
+	    driver.findElement(By.id("twotabsearchtextbox")).sendKeys("alexa");
+	    driver.findElement(By.id("nav-search-submit-button")).click();
+	    
+	    //Logout
+	    WebElement element=driver.findElement(By.id("nav-link-accountList-nav-line-1"));
+	    Actions action=new Actions(driver);
+	    action.moveToElement(element).build().perform();
+	    Thread.sleep(3000);
+	    driver.findElement(By.linkText("Sign Out")).click();
+	    Thread.sleep(3000);
+	    driver.quit();
+	    
+	    
+	}
+
+}
